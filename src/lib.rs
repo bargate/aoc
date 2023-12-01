@@ -1,4 +1,7 @@
-use std::{time::{Instant, Duration}, fmt::Display};
+use std::{
+    fmt::Display,
+    time::{Duration, Instant},
+};
 
 pub mod days;
 pub mod parse;
@@ -53,4 +56,17 @@ fn print_solution(which: usize, output: &[String], duration: Duration) {
 
 pub fn output<T: Display>(output: T) -> Vec<String> {
     vec![format!("{}", output)]
+}
+
+pub fn find_occurrence_indices<'a>(target: &str, patterns: &[&'a str]) -> Vec<usize> {
+    let mut occurrences: Vec<usize> = Vec::new();
+
+    for (index, _) in target.char_indices() {
+        for (pattern_index, &pattern) in patterns.iter().enumerate() {
+            if target[index..].starts_with(pattern) {
+                occurrences.push(pattern_index);
+            }
+        }
+    }
+    occurrences
 }
